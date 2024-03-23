@@ -26,5 +26,28 @@ server.post('/', async (req, res) => {
     }
     
 })
+server.post("/getCode",async(req,res)=>{
+    try {
+        console.log(req.body)
+        console.log(req.body.url)
+        const {data} = await axios.post(req.body.url, {
+            origin: req.body.origin,
+            destination: req.body.destination,
+            payment_type: req.body.payment_type,
+            order_amount: req.body.order_amount,
+            weight: req.body.weight,
+            length: req.body.length,
+            breadth: req.body.breadth,
+            height: req.body.height
+        },{
+            headers: {
+                Authorization: `Bearer ${req.body.token}`
+            }
+        })
+        res.send(data)    
+    } catch (error) {
+        console.log(error)
+    }
+})
 
 server.listen(8000, () => console.log(`Server is running on 8000`))
