@@ -50,4 +50,15 @@ server.post("/getCode",async(req,res)=>{
     }
 })
 
+server.post("/proxy",async(req,res)=>{
+    try {
+        const headers = req.headers
+        const body = req.body
+        const {data} = await axios.[req.body.method](req.body.url, {...body}, {headers})
+        res.status(200).json(data)    
+    } catch (error) {
+        res.status(500).json(error)
+    }
+})
+
 server.listen(8000, () => console.log(`Server is running on 8000`))
